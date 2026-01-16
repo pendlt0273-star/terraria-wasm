@@ -71,3 +71,4 @@ Do not publicly host the game assets without permission from Re-Logic. This is f
 
 Right now performance is not good enough in dotnet interpreted/jiterpreter mode, which is required for [the MonoMod WASM port](https://github.com/r58Playz/MonoMod) to function.
 Eventually it might be possible with improvements to the dotnet wasm jit or a "mixed aot" mode allowing for better FNA performance, but for now it isn't feasible
+ 
