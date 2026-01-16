@@ -1,1 +1,31 @@
+name: Build Terraria WASM
+on: [push]
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install mono-devel
+          npm install -g pnpm
+          dotnet tool install --global ilspycmd --version 9.0.0.7889
+
+      - name: Decompile and Patch
+        run: |
+          # You would need to move your Terraria.exe into the path here
+          bash tools/decompile.sh ./Terraria.exe
+          bash tools/copydecompiled.sh
+          bash tools/applypatches.sh Vanilla
+
+      - name: Build Production
+        run: make publish
